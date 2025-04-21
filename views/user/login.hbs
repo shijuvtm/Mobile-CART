@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-md-6 m-auto">
+        <div class="container mt-5 login-container">
+            <h2 class="text-center login-title">Login</h2>
+            <form action="/login" method="POST">
+                {{#if loginError}}
+                <p class="error">Invalid username or password</p>
+                {{/if}}
+                <div class="form-group">
+                    <label for="Email Address">Email ID</label>
+                    <input type="email" class="form-control" name="Email" placeholder="Enter Email ID">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Enter Password">
+                </div>
+                <a href="/signup" class="signup-link">Create new account?</a>
+                <button type="submit" class="btn btn-primary float-right login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+  .login-container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    padding-bottom:100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position:relative;
+  }
+
+  .login-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .form-control {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+
+  .signup-link {
+    display: block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .signup-link:hover {
+    text-decoration: underline;
+  }
+
+  .login-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    bottom:0 px;
+    right:18px;
+    position:absolute;
+  }
+
+  .login-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .error {
+    color: #dc3545;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+</style>

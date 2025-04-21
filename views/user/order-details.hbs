@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Order Details</h1>
+        <hr>
+        <h3>Order ID: {{orderDetails._id}}</h3>
+        <p><strong>Date:</strong> {{orderDetails.date}}</p>
+        <p><strong>Total Amount:</strong> Rs {{orderDetails.totalAmount}}</p>
+        <p><strong>Payment Method:</strong> {{orderDetails.paymentMethod}}</p>
+        <p><strong>Status:</strong> {{orderDetails.status}}</p>
+        <hr>
+        <h3>Products:</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td>{{this.name}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td>Rs.{{this.price}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+    </div>
+</body>
+</html>

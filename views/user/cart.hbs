@@ -1,0 +1,160 @@
+<section>
+    <div class="container">
+        <table class="table mt-5">
+            
+            <h4><b ><center>CART</center></b></h4>
+            <thead
+                <tr>
+                    <th style="text-align:center"scope="col">Item</th>
+                   
+                    <th scope="col">Title</th>
+                   
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Remove</th>
+
+                    </tr>
+            </thead>
+                <tbody>
+                    {{#each products}}
+                    <tr id='row-{{this.product._id}}'>
+                        
+                        <td><img style="height: 80px; width: 80px;" src="/public/product-images/{{this.product._id}}.jpg" alt="images"></td>&nbsp;&nbsp;
+                        <td>{{this.product.Name}}</td>
+                        <td>Rs.{{this.product.Price}}</td>
+                        
+                        <td>
+                            <button class="acrt-item-count mr-3 change-quantity" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-1)">-</button>
+                            <span id="{{this.product._id}}">{{this.quantity}}</span>
+                            <button class="cart-item-count ml-3 change-quantity" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',1)">+</button>
+                        </td>
+                        
+                        <td>
+                            <a href="javascript:void(0)" class="btn btn-danger" onclick="removeFromCart('{{this._id}}','{{this.product._id}}')">Remove</a>
+                        </td>
+                        
+                            
+                    </tr>
+
+                    {{/each}}
+                </tbody>
+            </table>
+            <hr>
+            <div class="row mt-3" style="padding-right:40px;padding-left:20px" ></div>
+
+                <h4 style="text-align:right">Total Amount: Rs.<span id="total">{{totalValue}}</span></h4>
+                 <a href="/place-order" class="btn btn-success float-right mt-4">Place Order</a>
+
+  
+                
+            </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function changeQuantity(cartId,proId,userId,count){
+    let quantity=parseInt(document.getElementById(proId).innerHTML)
+     count=parseInt(count)
+     
+        console.log("Cart ID:", cartId);
+        console.log("Product ID:", proId);
+        console.log("Count:", count);
+        console.log("Quantity:", quantity);
+
+    $.ajax({
+      url:'/change-product-quantity',
+      data:{
+        cart:cartId,
+        product:proId,
+        user:userId,
+        count:count,
+        quantity:quantity
+      },
+      method:'post',
+      success:(response)=> {
+        if(response.removeProduct){
+          alert("Product Removed from cart")
+          location.reload()
+        }else{
+          document.getElementById(proId).innerHTML = quantity + count;
+          document.getElementById('total').innerHTML = response.total;
+        }
+        
+      }
+    })
+  }
+  function removeFromCart(cartId,proId){
+    $.ajax({
+      url:'/remove-from-cart',
+      data:{
+        cart:cartId,
+        product:proId
+      },
+      method:'post',
+      success:(response)=> {
+        alert("Product Removed from cart")
+        location.reload()
+      }
+    })
+  }
+</script>
+<style>
+  .container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th, td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f6f9fc;
+    color: white;
+  }
+ tr{
+  background-color: #0056b3;
+ }
+ 
+  
+
+  tr:hover {
+    background-color: #094e93;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+  }
+
+  .cart-item-count {
+    background-color: #007bff;
+    color: rgb(251, 248, 248);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .cart-item-count:hover {
+    background-color: #0056b3;
+  }
+</style>
+
